@@ -73,3 +73,22 @@ resumo_das_escolas = pd.DataFrame({
     'media_reading':media_reading
 },index=[0])
 print(resumo_das_escolas)
+
+#Objetivo atual unir em um dataframe os seguintes df's school_name/math_score e school_name/budget
+per_school_math = school_data_complete.groupby(['school_name'])['math_score'].mean()
+per_school_reading = school_data_complete.groupby(['school_name'])['reading_score'].mean()
+per_school_budget = school_data_complete.groupby(['school_name'])['budget'].mean()
+
+#voltando series para df
+
+per_school_budget = per_school_budget.to_frame().reset_index()
+per_school_math = per_school_math.to_frame().reset_index()
+per_school_reading = per_school_reading.to_frame().reset_index()
+
+print(per_school_budget.info())
+print(per_school_math)
+#apos isso correlacionar os dois df's mantendo todas as colunas
+school_data_math = pd.merge(per_school_budget, per_school_math,how='left',on=['school_name'])
+school_data_reading = pd.merge(per_school_budget, per_school_reading,how='left',on=['school_name'])
+
+print(school_data_reading.describe())

@@ -2,7 +2,7 @@ import pandas as pd
 
 def le_csv(nome):
     nome+='.csv'
-    df  = pd.read_csv(nome)
+    df  = pd.read_csv(nome)  # df é um dataframe, tipo um excel
    # print(df)
     return df
 

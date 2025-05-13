@@ -1,4 +1,6 @@
 import pandas as pd 
+import streamlit as st
+import altair as alt    #ajuda na criação de gráficos
 
 def le_csv(nome):
     nome+='.csv'
@@ -92,3 +94,22 @@ school_data_math = pd.merge(per_school_budget, per_school_math,how='left',on=['s
 school_data_reading = pd.merge(per_school_budget, per_school_reading,how='left',on=['school_name'])
 
 print(school_data_reading.describe())
+
+#Graficos de forma dinamica
+#Streamlit
+
+st.markdown('# Cruzando dados escolas')
+
+st.markdown('## Rading Score school')
+
+st.dataframe(school_data_reading)
+
+st.line_chart(school_data_reading, x = 'reading_score', y = 'budget') #Gera grafico de linha
+
+chart = alt.Chart(school_data_math).mark_circle().encode(   
+    x = 'math_score',
+    y = 'budget',
+    color = 'school_name'
+)
+
+st.altair_chart(chart, use_container_width=True)  #Suporte do streamlit a biblioteca altair. "chart, use_container_width=True" --> para o grafico ocupar toda a tela
